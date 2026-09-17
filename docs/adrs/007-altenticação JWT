@@ -1,0 +1,77 @@
+# ADR-002 — Autenticação de Usuários via JWT (JSON Web Token)
+
+**Status:** Aceita  
+**Data:** 17/09/2026  
+**Responsável:** Equipe de Engenharia de Software — EasyFood  
+
+---
+
+## Contexto
+
+A API do **EasyFood** necessita de um mecanismo de autenticação para identificar os usuários, proteger rotas privadas e gerenciar permissões de acesso aos recursos (pedidos, perfis e restaurantes).
+
+Como a aplicação é construída em arquitetura de API RESTful desacoplada, é necessário um padrão de autenticação leve, escalável e *stateless* (sem retenção de estado de sessão no servidor), garantindo autonomia sobre a base de dados dos usuários.
+
+---
+
+## Alternativas consideradas
+
+1. Autenticação via JWT (JSON Web Token) com credenciais locais (e-mail/senha)
+2. AWS Cognito
+3. Login Social (OAuth 2.0 / Google / Facebook)
+4. Sessões tradicionais com Cookies (armazenadas em memória/Redis)
+5. Provedores IDaaS terceirizados (Auth0 / Firebase Auth)
+
+---
+
+## Decisão
+
+Adotar o padrão **JWT (JSON Web Token)** como mecanismo principal de autenticação e autorização para a API do EasyFood, utilizando autenticação local por e-mail e senha criptografada.
+
+---
+
+## Justificativa
+
+A utilização do JWT foi escolhida porque:
+
+- **Arquitetura Stateless:** O servidor não precisa consultar o banco de dados a cada requisição para validar a sessão, apenas verificar a assinatura criptográfica do token.
+- **Desempenho e Escalabilidade:** Reduz o consumo de I/O no banco de dados e facilita a escalabilidade horizontal da API.
+- **Autonomia de Dados:** Mantém o controle total sobre os dados dos usuários e regras de cadastro dentro do próprio ecossistema do EasyFood.
+- **Padronização REST:** Envio simplificado através do cabeçalho padrão `Authorization: Bearer <token>`, facilitando o consumo por aplicações web e mobile.
+- **Baixa Complexidade de Infraestrutura:** Não exige servidores de sessão distribuídos (como Redis) na fase atual do projeto.
+
+---
+
+## Consequências
+
+### Positivas
+
+- Independência total de provedores de identidade externos.
+- Alta velocidade na validação de rotas protegidas por meio da verificação de chave secreta.
+- Estrutura flexível no *payload* do token para transportar dados úteis (como `id`, `email` e `perfil`).
+- Integração simples e nativa com o ecossistema Node.js e Express.
+
+### Negativas
+
+- Necessidade de gerenciar a segurança do armazenamento de senhas (uso obrigatório de algoritmos de hashing como `bcrypt`).
+- Dificuldade nativa para revogar um token válido antes do seu tempo de expiração (*expiration time*).
+- Responsabilidade interna pelo desenvolvimento de fluxos como "recuperação de senha" e "confirmação de e-mail".
+
+---
+
+## Critérios de revisão
+
+Esta decisão deverá ser reavaliada quando:
+
+1. Houver necessidade de revogação imediata de acessos em tempo real, exigindo o uso de *Refresh Tokens* com lista de invalidação (ex: Redis).
+2. A complexidade de segurança exigir a delegação da gestão de identidades para um provedor especialista (ex: Auth0 ou AWS Cognito).
+3. For solicitada a integração obrigatória de logins sociais (OAuth2) em paralelo às credenciais locais.
+
+---
+
+## Notas do desenvolvedor
+
+- As senhas dos usuários devem ser criptografadas utilizando `bcrypt` (mínimo de 10 *salt rounds*) antes da persistência no banco de dados.
+- Os tokens serão assinados usando o algoritmo `HS256` com uma chave secreta forte definida na variável de ambiente `JWT_SECRET`.
+- O *payload* do token deve conter apenas identificadores públicos e necessários (ex: `sub`, `email`, `role`). Dados sensíveis (como senhas ou dados bancários) **jamais** devem ser incluídos no token.
+- O tempo de expiração padrão recomendado para o *Access Token* inicial é de 24 horas.

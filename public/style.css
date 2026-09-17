@@ -1,0 +1,377 @@
+/* ==========================================
+   CONFIGURAÇÕES GERAIS
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+}
+
+
+/* ==========================================
+   CABEÇALHO
+========================================== */
+
+header {
+    background: linear-gradient(135deg, #ff512f, #ff7043);
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+header p {
+    font-size: 17px;
+    opacity: 0.95;
+}
+
+
+/* ==========================================
+   CONTEÚDO PRINCIPAL
+========================================== */
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 35px auto;
+}
+
+
+/* ==========================================
+   SEÇÕES
+========================================== */
+
+section {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+/* ==========================================
+   BUSCA
+========================================== */
+
+.search-section {
+    padding: 20px;
+}
+
+#search {
+    width: 100%;
+    height: 52px;
+    padding: 0 20px;
+
+    border: 2px solid #eeeeee;
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+#search:focus {
+    border-color: #ff633c;
+    box-shadow: 0 0 0 3px rgba(255, 99, 60, 0.12);
+}
+
+#search::placeholder {
+    color: #999;
+}
+
+
+/* ==========================================
+   CATEGORIAS
+========================================== */
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-button {
+    border: none;
+
+    background: #f1f1f1;
+    color: #444;
+
+    padding: 11px 18px;
+
+    border-radius: 25px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.category-button:hover {
+    background: #ffe3dc;
+    color: #ff512f;
+    transform: translateY(-2px);
+}
+
+.category-button.active {
+    background: #ff512f;
+    color: white;
+
+    box-shadow: 0 5px 12px rgba(255, 81, 47, 0.25);
+}
+
+
+/* ==========================================
+   LISTA DE RESTAURANTES
+========================================== */
+
+#restaurant-list {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* ==========================================
+   CARD DO RESTAURANTE
+========================================== */
+
+.restaurant-card {
+    background: white;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    transition: all 0.25s ease;
+
+    position: relative;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+
+    border-color: #ffb09d;
+}
+
+.restaurant-card h3 {
+    font-size: 20px;
+
+    margin-bottom: 12px;
+
+    color: #222;
+}
+
+.restaurant-card p {
+    color: #666;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+.restaurant-card p:last-child {
+    color: #ff512f;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    margin-top: 12px;
+}
+
+
+/* ==========================================
+   CADASTRO
+========================================== */
+
+.register-section {
+    margin-top: 30px;
+}
+
+#restaurant-form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #444;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 2px solid #eeeeee;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    background: white;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #ff633c;
+
+    box-shadow: 0 0 0 3px rgba(255, 99, 60, 0.10);
+}
+
+
+/* ==========================================
+   BOTÃO CADASTRAR
+========================================== */
+
+.submit-button {
+    grid-column: 1 / -1;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #ff512f;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+    background: #e94324;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 15px rgba(255, 81, 47, 0.25);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+
+/* ==========================================
+   MENSAGENS
+========================================== */
+
+#restaurant-list > p {
+    color: #777;
+
+    padding: 20px 0;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 850px) {
+
+    #restaurant-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 35px 15px;
+    }
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    main {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    #restaurant-list {
+        grid-template-columns: 1fr;
+    }
+
+    #restaurant-form {
+        grid-template-columns: 1fr;
+    }
+
+    .submit-button {
+        grid-column: auto;
+    }
+
+    .categories {
+        gap: 8px;
+    }
+
+    .category-button {
+        padding: 10px 14px;
+    }
+
+}
